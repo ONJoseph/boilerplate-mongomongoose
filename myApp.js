@@ -1,4 +1,29 @@
 require('dotenv').config();
+const mongoose = require('mongoose');
+const express = require('express');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Log to see if the MONGO_URI is correctly loaded from .env
+const uri = process.env.MONGO_URI;
+console.log('Using MONGO_URI:', uri);
+
+// Connect to MongoDB
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => {
+    console.log('MongoDB connected successfully');
+    // Start the server only after successful MongoDB connection
+    // app.listen(PORT, () => {
+    //   console.log(`Server is running on port ${PORT}`);
+    // });
+  })
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+  });
 
 
 let Person;
