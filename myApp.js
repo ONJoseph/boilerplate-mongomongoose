@@ -16,20 +16,36 @@ mongoose.connect(uri, {
 })
   .then(() => {
     console.log('MongoDB connected successfully');
-    // Start the server only after successful MongoDB connection
-    // app.listen(PORT, () => {
-    //   console.log(`Server is running on port ${PORT}`);
-    // });
   })
   .catch(err => {
     console.error('MongoDB connection error:', err);
   });
 
+// Define the schema for Person
+const personSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  age: Number,
+  favoriteFoods: [String],
+});
 
-let Person;
+// Create the Person model
+const Person = mongoose.model('Person', personSchema);
 
+// Create and save a Person document
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  const person = new Person({
+    name: "John Doe",
+    age: 25,
+    favoriteFoods: ["Pizza", "Burger"],
+  });
+
+  person.save((err, data) => {
+    if (err) return done(err);
+    return done(null, data);
+  });
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
