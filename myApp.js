@@ -64,8 +64,12 @@ const findPeopleByName = (personName, done) => {
   });
 };
 
+// Create find one Person by food documents
 const findOneByFood = (food, done) => {
-  done(null /*, data*/);
+  Person.findOne({ favoriteFoods: food }, (err, person) => {
+    if (err) return done(err);
+    return done(null, person);
+  });
 };
 
 const findPersonById = (personId, done) => {
