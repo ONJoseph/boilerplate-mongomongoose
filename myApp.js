@@ -95,10 +95,19 @@ const findEditThenSave = (personId, done) => {
   });
 };
 
+// Create find and update documents
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
 
-  done(null /*, data*/);
+  Person.findOneAndUpdate(
+    { name: personName },      // Search by name
+    { age: ageToSet },         // Update the age
+    { new: true },             // Return the updated document
+    (err, updatedPerson) => {  // Callback function
+      if (err) return done(err);
+      return done(null, updatedPerson);
+    }
+  );
 };
 
 const removeById = (personId, done) => {
