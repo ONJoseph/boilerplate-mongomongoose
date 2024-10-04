@@ -34,7 +34,7 @@ const personSchema = new mongoose.Schema({
 // Create the Person model
 const Person = mongoose.model('Person', personSchema);
 
-// Create and save a Person document
+// Create and save a Person document (done)
 const createAndSavePerson = (done) => {
   const person = new Person({
     name: "John Doe",
