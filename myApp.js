@@ -34,7 +34,7 @@ const personSchema = new mongoose.Schema({
 // Create the Person model
 const Person = mongoose.model('Person', personSchema);
 
-// Create and save a Person document (done)
+// Create and save a Person document
 const createAndSavePerson = (done) => {
   const person = new Person({
     name: "John Doe",
@@ -48,8 +48,12 @@ const createAndSavePerson = (done) => {
   });
 };
 
+// Create many People documents
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Person.create(arrayOfPeople, (err, people) => {
+    if (err) return done(err);
+    return done(null, people);
+  });
 };
 
 const findPeopleByName = (personName, done) => {
@@ -100,12 +104,12 @@ const queryChain = (done) => {
 
 exports.PersonModel = Person;
 exports.createAndSavePerson = createAndSavePerson;
+exports.createManyPeople = createManyPeople;
 exports.findPeopleByName = findPeopleByName;
 exports.findOneByFood = findOneByFood;
 exports.findPersonById = findPersonById;
 exports.findEditThenSave = findEditThenSave;
 exports.findAndUpdate = findAndUpdate;
-exports.createManyPeople = createManyPeople;
 exports.removeById = removeById;
 exports.removeManyPeople = removeManyPeople;
 exports.queryChain = queryChain;
